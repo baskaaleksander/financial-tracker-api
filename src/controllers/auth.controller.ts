@@ -22,12 +22,7 @@ export const loginUser = async (
   try {
     const { email, password } = req.body;
     const user = await authService.loginUser(email, password);
-    res.cookie('token', user.token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+
     res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     next(error);
@@ -40,8 +35,22 @@ export const logoutUser = async (
   next: NextFunction,
 ) => {
   try {
-    res.clearCookie('token');
+    await authService.logoutUser(req.user?.id);
     res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const refreshAccessToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { refreshToken } = req.body;
+    const newAccessToken = await authService.refreshAccessToken(refreshToken);
+    res.status(200).json({ access_token: newAccessToken });
   } catch (error) {
     next(error);
   }

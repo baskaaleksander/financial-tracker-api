@@ -7,6 +7,7 @@ interface Config {
   port: number;
   nodeEnv: string;
   jwtSecret: string;
+  jwtSecretRefresh: string;
 }
 
 const config: Config = {
@@ -14,6 +15,7 @@ const config: Config = {
   port: Number(process.env.PORT) || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
   jwtSecret: process.env.JWT_SECRET || 'your_jwt_secret',
+  jwtSecretRefresh: process.env.JWT_SECRET_REFRESH || 'your_jwt_refresh_secret',
 };
 
 export default config;
