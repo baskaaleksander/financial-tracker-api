@@ -4,6 +4,10 @@ import jwt from 'jsonwebtoken';
 import config from '../config/env';
 import RefreshToken from '../models/refresh-token.model';
 
+export interface UserPayload extends jwt.JwtPayload {
+  userId: string;
+}
+
 export const registerUser = async (userData: {
   firstName: string;
   email: string;
@@ -83,7 +87,7 @@ export const refreshAccessToken = async (refreshToken: string) => {
 
   let payload;
   try {
-    payload = jwt.verify(refreshToken, config.jwtSecretRefresh);
+    payload = jwt.verify(refreshToken, config.jwtSecretRefresh) as UserPayload;
   } catch (error) {
     throw new Error('Invalid refresh token');
   }
