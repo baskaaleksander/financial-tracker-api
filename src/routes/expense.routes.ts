@@ -1,21 +1,24 @@
 import express from 'express';
 import * as expenseController from '../controllers/expense.controller';
 import { validate } from '../middlewares/validate';
-import { createExpenseSchema } from '../validators/expense.validator';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import {
+  createTransactionSchema,
+  updateTransactionSchema,
+} from '../validators/transaction.validator';
 
 const router = express.Router();
 
 router.post(
   '/',
-  validate(createExpenseSchema),
+  validate(createTransactionSchema),
   authMiddleware,
   expenseController.createExpense,
 );
 
 router.put(
   '/:id',
-  validate(createExpenseSchema),
+  validate(updateTransactionSchema),
   authMiddleware,
   expenseController.updateExpense,
 );

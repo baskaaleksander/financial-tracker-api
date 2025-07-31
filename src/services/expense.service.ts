@@ -1,12 +1,12 @@
 import Category from '../models/category.model';
 import Expense from '../models/expense.model';
 import {
-  CreateExpenseSchema,
-  UpdateExpenseSchema,
-} from '../validators/expense.validator';
+  CreateTransactionSchema,
+  UpdateTransactionSchema,
+} from '../validators/transaction.validator';
 
 export const createExpense = async (
-  data: CreateExpenseSchema,
+  data: CreateTransactionSchema,
   userId: string,
 ) => {
   const category = await Category.findOne({ name: data.category, userId });
@@ -28,7 +28,7 @@ export const createExpense = async (
 
 export const updateExpense = async (
   id: string,
-  data: UpdateExpenseSchema,
+  data: UpdateTransactionSchema,
   userId: string,
 ) => {
   const expense = await Expense.findById(id);
