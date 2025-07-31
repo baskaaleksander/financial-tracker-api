@@ -14,8 +14,13 @@ const expenseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  category: {
+  categoryName: {
     type: String,
+    required: true,
+  },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
     required: true,
   },
   date: {
