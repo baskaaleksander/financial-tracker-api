@@ -1,3 +1,4 @@
+import Category from '../models/category.model';
 import Expense from '../models/expense.model';
 import {
   CreateExpenseSchema,
@@ -8,7 +9,19 @@ export const createExpense = async (
   data: CreateExpenseSchema,
   userId: string,
 ) => {
-  const expense = new Expense({ ...data, userId });
+  const category = await Category.findOne({ name: data.category, userId });
+
+  if (!category) {
+    throw new Error('Category not found');
+  }
+
+  const expense = new Expense({
+    amount: data.amount,
+    description: data.description,
+    categoryName: data.category,
+    categoryId: category._id,
+    userId,
+  });
   await expense.save();
   return expense;
 };
@@ -27,7 +40,23 @@ export const updateExpense = async (
     throw new Error('You can only update your own expenses');
   }
 
-  Object.assign(expense, data);
+  const category = await Category.findOne({
+    name: data.category,
+    userId,
+  });
+
+  if (data.category && !category) {
+    throw new Error('Category not found');
+  }
+
+  Object.assign(expense, {
+    amount: data.amount ?? expense.amount,
+    description: data.description ?? expense.description,
+    date: data.date ? new Date(data.date) : expense.date,
+    categoryName: data.category ?? expense.categoryName,
+    categoryId: category ? category._id : expense.categoryId,
+  });
+
   await expense.save();
 
   return expense;
