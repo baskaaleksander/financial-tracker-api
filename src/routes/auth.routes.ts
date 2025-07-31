@@ -15,10 +15,6 @@ router.post(
 );
 router.post('/login', validate(loginUserSchema), authController.loginUser);
 router.post('/logout', authMiddleware, authController.logoutUser);
-router.post(
-  '/refresh-token',
-  authMiddleware,
-  authController.refreshAccessToken,
-);
+router.post('/refresh-token', authController.refreshAccessToken);
 
 export default router;
