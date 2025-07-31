@@ -85,6 +85,12 @@ export const refreshAccessToken = async (refreshToken: string) => {
     throw new Error('Refresh token is required');
   }
 
+  const refreshTokenDoc = await RefreshToken.findOne({ token: refreshToken });
+
+  if (!refreshTokenDoc) {
+    throw new Error('Invalid refresh token');
+  }
+
   let payload;
   try {
     payload = jwt.verify(refreshToken, config.jwtSecretRefresh) as UserPayload;

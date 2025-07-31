@@ -23,7 +23,22 @@ export const loginUser = async (
     const { email, password } = req.body;
     const user = await authService.loginUser(email, password);
 
-    res.status(200).json({ message: 'Login successful', user });
+    res.cookie('refresh_token', user.refresh_token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: 'Login successful',
+      user: {
+        access_token: user.access_token,
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -48,7 +63,10 @@ export const refreshAccessToken = async (
   next: NextFunction,
 ) => {
   try {
-    const { refreshToken } = req.body;
+    const refreshToken = req.cookies.refresh_token;
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Missing refresh token' });
+    }
     const newAccessToken = await authService.refreshAccessToken(refreshToken);
     res.status(200).json({ access_token: newAccessToken });
   } catch (error) {
