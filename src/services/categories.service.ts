@@ -17,7 +17,7 @@ export const createCategory = async (
     throw new Error('Category already exists');
   }
 
-  const category = new Category(categoryData);
+  const category = new Category({ ...categoryData, userId });
   await category.save();
   return category;
 };

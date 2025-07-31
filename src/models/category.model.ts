@@ -8,6 +8,10 @@ const categorySchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  color: {
+    type: String,
+    default: '#ffffff',
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
