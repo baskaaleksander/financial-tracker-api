@@ -10,7 +10,7 @@ import Category from '../../src/models/category.model';
 
 jest.mock('../../src/models/expense.model');
 jest.mock('../../src/models/category.model');
-jest.mock('../../src/validators/expense.validator');
+jest.mock('../../src/validators/transaction.validator');
 
 const mockExpense = Expense as jest.MockedFunction<any>;
 const mockCategory = Category as jest.MockedFunction<any>;
