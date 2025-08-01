@@ -9,24 +9,24 @@ import {
 
 const router = express.Router();
 
+router.use(authMiddleware);
+
 router.post(
   '/',
-  authMiddleware,
   validate(createTransactionSchema),
   transactionController.createTransaction,
 );
 
 router.put(
   '/:id',
-  authMiddleware,
   validate(updateTransactionSchema),
   transactionController.updateTransaction,
 );
 
-router.delete('/:id', authMiddleware, transactionController.deleteTransaction);
+router.delete('/:id', transactionController.deleteTransaction);
 
-router.get('/:id', authMiddleware, transactionController.getTransactionById);
+router.get('/:id', transactionController.getTransactionById);
 
-router.get('/', authMiddleware, transactionController.getTransactionsByUserId);
+router.get('/', transactionController.getTransactionsByUserId);
 
 export default router;

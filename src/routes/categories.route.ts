@@ -8,24 +8,24 @@ import {
 import { authMiddleware } from '../middlewares/auth.middleware';
 const router = express.Router();
 
+router.use(authMiddleware);
+
 router.post(
   '/',
-  authMiddleware,
   validate(createCategorySchema),
   categoriesController.createCategory,
 );
 
 router.put(
   '/:id',
-  authMiddleware,
   validate(updateCategorySchema),
   categoriesController.updateCategory,
 );
 
-router.delete('/:id', authMiddleware, categoriesController.deleteCategory);
+router.delete('/:id', categoriesController.deleteCategory);
 
-router.get('/', authMiddleware, categoriesController.getCategories);
+router.get('/', categoriesController.getCategories);
 
-router.get('/:id', authMiddleware, categoriesController.getCategory);
+router.get('/:id', categoriesController.getCategory);
 
 export default router;
