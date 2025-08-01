@@ -1,5 +1,5 @@
 import express from 'express';
-import * as incomeController from '../controllers/income.controller';
+import * as transactionController from '../controllers/transaction.controller';
 import { validate } from '../middlewares/validate';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import {
@@ -13,20 +13,20 @@ router.post(
   '/',
   authMiddleware,
   validate(createTransactionSchema),
-  incomeController.createIncome,
+  transactionController.createTransaction,
 );
 
 router.put(
   '/:id',
   authMiddleware,
   validate(updateTransactionSchema),
-  incomeController.updateIncome,
+  transactionController.updateTransaction,
 );
 
-router.delete('/:id', authMiddleware, incomeController.deleteIncome);
+router.delete('/:id', authMiddleware, transactionController.deleteTransaction);
 
-router.get('/:id', authMiddleware, incomeController.getIncomeById);
+router.get('/:id', authMiddleware, transactionController.getTransactionById);
 
-router.get('/', authMiddleware, incomeController.getIncomesByUserId);
+router.get('/', authMiddleware, transactionController.getTransactionsByUserId);
 
 export default router;

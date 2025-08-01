@@ -6,6 +6,9 @@ export const createTransactionSchema = z.object({
   date: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: 'Invalid date format',
   }),
+  type: z.enum(['income', 'expense'], {
+    message: 'Type must be either income or expense',
+  }),
   category: z.string().min(1, 'Category is required'),
 });
 
