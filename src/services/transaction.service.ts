@@ -41,10 +41,12 @@ export const updateTransaction = async (
     throw new Error('You can only update your own transactions');
   }
 
-  const category = await Category.findOne({
-    name: data.category,
-    userId,
-  });
+  const category = data.category
+    ? await Category.findOne({
+        name: data.category,
+        userId,
+      })
+    : null;
 
   if (data.category && !category) {
     throw new Error('Category not found');
