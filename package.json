@@ -9,7 +9,11 @@
     "dev": "nodemon --watch \"src/**/*.ts\" --exec \"tsx\" src/server.ts",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:auth": "jest --testPathPatterns=auth",
+    "test:transaction": "jest --testPathPatterns=transaction",
+    "test:categories": "jest --testPathPatterns=categories",
+    "test:report": "jest --testPathPatterns=report"
   },
   "keywords": [],
   "author": "",

@@ -1,13 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import config from '../config/env';
-
-export interface AuthRequest extends Request {
-  user?: any;
-  cookies: {
-    token?: string;
-  };
-}
+import { UserPayload, AuthRequest } from '../utils/types';
 
 export const authMiddleware = (
   req: AuthRequest,
@@ -23,7 +17,7 @@ export const authMiddleware = (
     if (err) {
       return res.status(403).json({ message: 'Invalid JWT token' });
     }
-    req.user = user;
+    req.user = user as UserPayload;
     next();
   });
 };
