@@ -87,7 +87,6 @@ export const getReportFromToDate = async (
 export const getLastMonthReport = async (userId: string) => {
   const lastMonth = new Date();
   lastMonth.setDate(1);
-  lastMonth.setHours(0, 0, 0, 0);
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
   return getReportFromToDate(userId, lastMonth, new Date());
