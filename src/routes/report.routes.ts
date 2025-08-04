@@ -10,14 +10,14 @@ router.use(authMiddleware);
 
 router.post('/', validate(saveReportSchema), reportController.saveReport);
 
-router.get('/:id', reportController.getReportById);
-
 router.get('/generate', reportController.getReportFromToDate);
 
 router.get('/latest', reportController.getLastMonthReport);
 
-router.get('/', reportController.getAllReports);
+router.get('/:id', reportController.getReportById);
 
 router.delete('/:id', reportController.deleteReport);
+
+router.get('/', reportController.getAllReports);
 
 export default router;

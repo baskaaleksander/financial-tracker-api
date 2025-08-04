@@ -10,7 +10,9 @@ export const saveReport = async (
     const reportData = req.body;
     const userId = req.user?.id;
 
-    const newReport = await reportService.saveReport(reportData, userId);
+    const reportDataWithUserId = { ...reportData, userId };
+
+    const newReport = await reportService.saveReport(reportDataWithUserId);
     res.status(201).json(newReport);
   } catch (error) {
     next(error);
