@@ -1,3 +1,4 @@
+import { AppError } from '../middlewares/error.middleware';
 import Category from '../models/category.model';
 import {
   CreateCategorySchema,
@@ -14,7 +15,9 @@ export const createCategory = async (
   });
 
   if (existingCategory) {
-    throw new Error('Category already exists');
+    const error = new Error('Category already exists') as AppError;
+    error.statusCode = 409;
+    throw error;
   }
 
   const category = new Category({ ...categoryData, userId });
@@ -30,11 +33,17 @@ export const updateCategory = async (
   const category = await Category.findById(id);
 
   if (!category) {
-    throw new Error('Category not found');
+    const error = new Error('Category not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
 
   if (category.userId.toString() !== userId) {
-    throw new Error('You can only update your own categories');
+    const error = new Error(
+      'You can only update your own categories',
+    ) as AppError;
+    error.statusCode = 403;
+    throw error;
   }
 
   Object.assign(category, categoryData);
@@ -46,11 +55,17 @@ export const deleteCategory = async (id: string, userId: string) => {
   const category = await Category.findById(id);
 
   if (!category) {
-    throw new Error('Category not found');
+    const error = new Error('Category not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
 
   if (category.userId.toString() !== userId) {
-    throw new Error('You can only delete your own categories');
+    const error = new Error(
+      'You can only delete your own categories',
+    ) as AppError;
+    error.statusCode = 403;
+    throw error;
   }
 
   await category.deleteOne();
@@ -65,11 +80,17 @@ export const getCategoryById = async (id: string, userId: string) => {
   const category = await Category.findById(id);
 
   if (!category) {
-    throw new Error('Category not found');
+    const error = new Error('Category not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
 
   if (category.userId.toString() !== userId) {
-    throw new Error('You can only access your own categories');
+    const error = new Error(
+      'You can only access your own categories',
+    ) as AppError;
+    error.statusCode = 403;
+    throw error;
   }
 
   return category;

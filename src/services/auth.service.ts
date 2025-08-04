@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/env';
 import RefreshToken from '../models/refresh-token.model';
+import { AppError } from '../middlewares/error.middleware';
 
 export interface UserPayload extends jwt.JwtPayload {
   userId: string;
@@ -17,7 +18,9 @@ export const registerUser = async (userData: {
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error('User already exists');
+    const error = new Error('User already exists') as AppError;
+    error.statusCode = 409;
+    throw error;
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,12 +38,16 @@ export const registerUser = async (userData: {
 export const loginUser = async (email: string, password: string) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error('Invalid email or password');
+    const error = new Error('Invalid email or password') as AppError;
+    error.statusCode = 401;
+    throw error;
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    throw new Error('Invalid email or password');
+    const error = new Error('Invalid email or password') as AppError;
+    error.statusCode = 401;
+    throw error;
   }
 
   const access_token = jwt.sign({ userId: user._id }, config.jwtSecret, {
@@ -82,27 +89,35 @@ export const logoutUser = async (userId: string) => {
 };
 export const refreshAccessToken = async (refreshToken: string) => {
   if (!refreshToken) {
-    throw new Error('Refresh token is required');
+    const error = new Error('Refresh token is required') as AppError;
+    error.statusCode = 400;
+    throw error;
   }
 
   const refreshTokenDoc = await RefreshToken.findOne({ token: refreshToken });
 
   if (!refreshTokenDoc) {
-    throw new Error('Invalid refresh token');
+    const error = new Error('Invalid refresh token') as AppError;
+    error.statusCode = 401;
+    throw error;
   }
 
   let payload;
   try {
     payload = jwt.verify(refreshToken, config.jwtSecretRefresh) as UserPayload;
   } catch (error) {
-    throw new Error('Invalid refresh token');
+    const err = new Error('Invalid refresh token') as AppError;
+    err.statusCode = 401;
+    throw err;
   }
 
   const userId = payload.userId;
   const user = await User.findById(userId);
 
   if (!user) {
-    throw new Error('User not found');
+    const error = new Error('User not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
 
   const newAccessToken = jwt.sign({ userId: user._id }, config.jwtSecret, {

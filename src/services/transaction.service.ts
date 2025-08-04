@@ -1,3 +1,4 @@
+import { AppError } from '../middlewares/error.middleware';
 import Category from '../models/category.model';
 import Transaction from '../models/transaction.model';
 import {
@@ -35,10 +36,16 @@ export const updateTransaction = async (
   const transaction = await Transaction.findById(id);
 
   if (!transaction) {
-    throw new Error('Transaction not found');
+    const error = Error('Transaction not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
   if (userId !== transaction.userId.toString()) {
-    throw new Error('You can only update your own transactions');
+    const error = Error(
+      'You can only update your own transactions',
+    ) as AppError;
+    error.statusCode = 403;
+    throw error;
   }
 
   const category = data.category
@@ -49,7 +56,9 @@ export const updateTransaction = async (
     : null;
 
   if (data.category && !category) {
-    throw new Error('Category not found');
+    const error = Error('Category not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
 
   Object.assign(transaction, {
@@ -69,10 +78,16 @@ export const deleteTransaction = async (id: string, userId: string) => {
   const transaction = await Transaction.findById(id);
 
   if (!transaction) {
-    throw new Error('Transaction not found');
+    const error = Error('Transaction not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
   if (userId !== transaction.userId.toString()) {
-    throw new Error('You can only delete your own transactions');
+    const error = Error(
+      'You can only delete your own transactions',
+    ) as AppError;
+    error.statusCode = 403;
+    throw error;
   }
 
   await transaction.deleteOne();
@@ -81,10 +96,14 @@ export const deleteTransaction = async (id: string, userId: string) => {
 export const getTransactionById = async (id: string, userId: string) => {
   const transaction = await Transaction.findById(id);
   if (!transaction) {
-    throw new Error('Transaction not found');
+    const error = Error('Transaction not found') as AppError;
+    error.statusCode = 404;
+    throw error;
   }
   if (userId !== transaction.userId.toString()) {
-    throw new Error('You can only view your own transactions');
+    const error = Error('You can only view your own transactions') as AppError;
+    error.statusCode = 403;
+    throw error;
   }
   return transaction;
 };
