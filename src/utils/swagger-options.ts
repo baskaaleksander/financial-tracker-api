@@ -1,6 +1,6 @@
 export const swaggerOptions = {
   swaggerDefinition: {
-    myapi: '3.0.0',
+    openapi: '3.0.0',
     info: {
       title: 'Financial Tracker API',
       version: '1.0.0',
@@ -12,5 +12,5 @@ export const swaggerOptions = {
       },
     ],
   },
-  apis: ['./routes/*.js', './routes/*.ts'],
+  apis: ['./src/routes/*.ts', './src/utils/swagger-schemas.ts'],
 };

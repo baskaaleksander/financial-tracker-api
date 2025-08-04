@@ -9,6 +9,7 @@ import { swaggerOptions } from './utils/swagger-options';
 
 const app = express();
 app.use(cookieParser());
+app.use(express.json());
 
 app.use('/api', routes);
 
