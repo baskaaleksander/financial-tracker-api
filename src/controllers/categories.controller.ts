@@ -7,7 +7,7 @@ export const createCategory = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     const categoryData = req.body;
     const category = await categoriesService.createCategory(
       categoryData,
@@ -25,7 +25,7 @@ export const updateCategory = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     const categoryData = req.body;
     const category = await categoriesService.updateCategory(
       req.params.id,
@@ -44,7 +44,7 @@ export const deleteCategory = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     await categoriesService.deleteCategory(req.params.id, userId);
     res.status(204).send();
   } catch (error) {
@@ -58,7 +58,7 @@ export const getCategories = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     const categories = await categoriesService.getCategoriesByUserId(userId);
     res.status(200).json(categories);
   } catch (error) {
@@ -72,7 +72,7 @@ export const getCategory = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     const category = await categoriesService.getCategoryById(
       req.params.id,
       userId,

@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import config from '../config/env';
-import { UserPayload, AuthRequest } from '../utils/types';
 
 export const authMiddleware = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
@@ -17,7 +16,7 @@ export const authMiddleware = (
     if (err) {
       return res.status(403).json({ message: 'Invalid JWT token' });
     }
-    req.user = user as UserPayload;
+    req.user = user;
     next();
   });
 };

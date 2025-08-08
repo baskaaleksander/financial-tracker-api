@@ -8,7 +8,7 @@ export const saveReport = async (
 ) => {
   try {
     const reportData = req.body;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
 
     const reportDataWithUserId = { ...reportData, userId };
 
@@ -25,7 +25,7 @@ export const getReportFromToDate = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
     const fromDate = new Date(req.query.fromDate as string);
     const toDate = new Date(req.query.toDate as string);
 
@@ -46,7 +46,7 @@ export const getLastMonthReport = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
 
     const report = await reportService.getLastMonthReport(userId);
     res.status(200).json(report);
@@ -61,7 +61,7 @@ export const getAllReports = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
 
     const reports = await reportService.getAllReports(userId);
     res.status(200).json(reports);
@@ -77,7 +77,7 @@ export const getReportById = async (
 ) => {
   try {
     const reportId = req.params.id;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
 
     const report = await reportService.getReportById(reportId, userId);
     if (!report) {
@@ -96,7 +96,7 @@ export const deleteReport = async (
 ) => {
   try {
     const reportId = req.params.id;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;
 
     await reportService.deleteReport(reportId, userId);
     res.status(204).send();

@@ -50,7 +50,12 @@ export const logoutUser = async (
   next: NextFunction,
 ) => {
   try {
-    await authService.logoutUser(req.user?.id);
+    await authService.logoutUser(req.user?.userId);
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     next(error);

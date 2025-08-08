@@ -9,7 +9,7 @@ export const createTransaction = async (
   try {
     const transaction = await transactionService.createTransaction(
       req.body,
-      req.user?.id,
+      req.user?.userId,
     );
     res.status(201).json(transaction);
   } catch (error) {
@@ -26,7 +26,7 @@ export const updateTransaction = async (
     const transaction = await transactionService.updateTransaction(
       req.params.id,
       req.body,
-      req.user?.id,
+      req.user?.userId,
     );
     res.status(200).json(transaction);
   } catch (error) {
@@ -40,7 +40,7 @@ export const deleteTransaction = async (
   next: NextFunction,
 ) => {
   try {
-    await transactionService.deleteTransaction(req.params.id, req.user?.id);
+    await transactionService.deleteTransaction(req.params.id, req.user?.userId);
     res.status(204).send();
   } catch (error) {
     next(error);
@@ -55,7 +55,7 @@ export const getTransactionById = async (
   try {
     const transaction = await transactionService.getTransactionById(
       req.params.id,
-      req.user?.id,
+      req.user?.userId,
     );
     res.status(200).json(transaction);
   } catch (error) {
@@ -70,7 +70,7 @@ export const getTransactionsByUserId = async (
 ) => {
   try {
     const transactions = await transactionService.getTransactionsByUserId(
-      req.user?.id,
+      req.user?.userId,
     );
     res.status(200).json(transactions);
   } catch (error) {

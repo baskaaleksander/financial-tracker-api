@@ -15,7 +15,6 @@ A RESTful API for personal financial management built with Node.js, Express, Typ
 - [Testing](#testing)
 - [Development](#development)
 - [Error Handling](#error-handling)
-- [Contributing](#contributing)
 
 ## Features
 

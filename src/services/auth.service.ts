@@ -85,6 +85,7 @@ export const loginUser = async (email: string, password: string) => {
 
 export const logoutUser = async (userId: string) => {
   await RefreshToken.deleteOne({ userId });
+
   return { message: 'Logout successful' };
 };
 export const refreshAccessToken = async (refreshToken: string) => {
