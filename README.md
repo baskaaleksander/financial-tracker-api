@@ -110,10 +110,6 @@ financial-tracker-api/
 
 3. **Set up environment variables**
 
-```bash
-   cp .env.example .env
-```
-
 ## Configuration
 
 Create a .env file in the root directory with the following variables:
@@ -142,7 +138,7 @@ JWT_SECRET_REFRESH=your_jwt_refresh_secret_key
 
 The API documentation is available via Swagger UI when the server is running:
 
-- **Swagger UI**: http://localhost:3000/api-docs
+- **Swagger UI**: https://fintracker.baskaaleksander.com/api-docs
 
 The documentation includes detailed information about all endpoints, request/response schemas, and authentication requirements.
 
