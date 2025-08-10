@@ -1,5 +1,5 @@
-import { AppError } from '../middlewares/error.middleware';
-import Category from '../models/category.model';
+import { AppError } from '../middlewares/error.middleware.js';
+import Category from '../models/category.model.js';
 import {
   CreateCategorySchema,
   UpdateCategorySchema,

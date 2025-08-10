@@ -1,11 +1,11 @@
 import express from 'express';
-import * as categoriesController from '../controllers/categories.controller';
-import { validate } from '../middlewares/validate';
+import * as categoriesController from '../controllers/categories.controller.js';
+import { validate } from '../middlewares/validate.js';
 import {
   createCategorySchema,
   updateCategorySchema,
-} from '../validators/category.validator';
-import { authMiddleware } from '../middlewares/auth.middleware';
+} from '../validators/category.validator.js';
+import { authMiddleware } from '../middlewares/auth.middleware.js';
 const router = express.Router();
 
 router.use(authMiddleware);

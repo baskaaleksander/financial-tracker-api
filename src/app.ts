@@ -1,11 +1,11 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-import { errorMiddleware } from './middlewares/error.middleware';
-import routes from './routes/index';
+import { errorMiddleware } from './middlewares/error.middleware.js';
+import routes from './routes/index.js';
 import * as swaggerUi from 'swagger-ui-express';
 import * as swaggerJsDoc from 'swagger-jsdoc';
-import { swaggerOptions } from './utils/swagger-options';
+import { swaggerOptions } from './utils/swagger-options.js';
 
 const app = express();
 app.use(cookieParser());

@@ -1,8 +1,8 @@
-import { SaveReportSchema } from '../validators/report.validator';
-import Report from '../models/report.model';
-import Transaction from '../models/transaction.model';
-import { CategoryBreakdown, DailyBreakdown } from '../utils/types';
-import { AppError } from '../middlewares/error.middleware';
+import { SaveReportSchema } from '../validators/report.validator.js';
+import Report from '../models/report.model.js';
+import Transaction from '../models/transaction.model.js';
+import { CategoryBreakdown, DailyBreakdown } from '../utils/types.js';
+import { AppError } from '../middlewares/error.middleware.js';
 
 export const saveReport = async (reportData: SaveReportSchema) => {
   const report = new Report({

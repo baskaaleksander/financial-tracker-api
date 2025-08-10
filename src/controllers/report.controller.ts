@@ -1,4 +1,4 @@
-import * as reportService from '../services/report.service';
+import * as reportService from '../services/report.service.js';
 import { NextFunction, Request, Response } from 'express';
 
 export const saveReport = async (
@@ -29,6 +29,10 @@ export const getReportFromToDate = async (
     const fromDate = new Date(req.query.fromDate as string);
     const toDate = new Date(req.query.toDate as string);
 
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
     const report = await reportService.getReportFromToDate(
       userId,
       fromDate,
@@ -48,6 +52,9 @@ export const getLastMonthReport = async (
   try {
     const userId = req.user?.userId;
 
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
     const report = await reportService.getLastMonthReport(userId);
     res.status(200).json(report);
   } catch (error) {
@@ -62,6 +69,10 @@ export const getAllReports = async (
 ) => {
   try {
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
 
     const reports = await reportService.getAllReports(userId);
     res.status(200).json(reports);
@@ -78,6 +89,10 @@ export const getReportById = async (
   try {
     const reportId = req.params.id;
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
 
     const report = await reportService.getReportById(reportId, userId);
     if (!report) {
@@ -97,6 +112,10 @@ export const deleteReport = async (
   try {
     const reportId = req.params.id;
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
 
     await reportService.deleteReport(reportId, userId);
     res.status(204).send();

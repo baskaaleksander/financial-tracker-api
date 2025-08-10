@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import * as authService from '../services/auth.service';
+import * as authService from '../services/auth.service.js';
 
 export const registerUser = async (
   req: Request,
@@ -50,7 +50,13 @@ export const logoutUser = async (
   next: NextFunction,
 ) => {
   try {
-    await authService.logoutUser(req.user?.userId);
+    const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
+    await authService.logoutUser(userId);
     res.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,

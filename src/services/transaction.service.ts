@@ -1,10 +1,10 @@
-import { AppError } from '../middlewares/error.middleware';
-import Category from '../models/category.model';
-import Transaction from '../models/transaction.model';
+import { AppError } from '../middlewares/error.middleware.js';
+import Category from '../models/category.model.js';
+import Transaction from '../models/transaction.model.js';
 import {
   CreateTransactionSchema,
   UpdateTransactionSchema,
-} from '../validators/transaction.validator';
+} from '../validators/transaction.validator.js';
 
 export const createTransaction = async (
   data: CreateTransactionSchema,

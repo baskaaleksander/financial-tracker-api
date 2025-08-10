@@ -1,9 +1,9 @@
-import User from '../models/user.model';
+import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import config from '../config/env';
-import RefreshToken from '../models/refresh-token.model';
-import { AppError } from '../middlewares/error.middleware';
+import config from '../config/env.js';
+import RefreshToken from '../models/refresh-token.model.js';
+import { AppError } from '../middlewares/error.middleware.js';
 
 export interface UserPayload extends jwt.JwtPayload {
   userId: string;

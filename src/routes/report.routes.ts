@@ -1,8 +1,8 @@
 import express from 'express';
-import { authMiddleware } from '../middlewares/auth.middleware';
-import * as reportController from '../controllers/report.controller';
-import { validate } from '../middlewares/validate';
-import { saveReportSchema } from '../validators/report.validator';
+import { authMiddleware } from '../middlewares/auth.middleware.js';
+import * as reportController from '../controllers/report.controller.js';
+import { validate } from '../middlewares/validate.js';
+import { saveReportSchema } from '../validators/report.validator.js';
 
 const router = express.Router();
 

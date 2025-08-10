@@ -1,11 +1,11 @@
 import express from 'express';
-import * as transactionController from '../controllers/transaction.controller';
-import { validate } from '../middlewares/validate';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import * as transactionController from '../controllers/transaction.controller.js';
+import { validate } from '../middlewares/validate.js';
+import { authMiddleware } from '../middlewares/auth.middleware.js';
 import {
   createTransactionSchema,
   updateTransactionSchema,
-} from '../validators/transaction.validator';
+} from '../validators/transaction.validator.js';
 
 const router = express.Router();
 

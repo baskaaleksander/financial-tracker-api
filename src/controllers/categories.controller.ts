@@ -1,4 +1,4 @@
-import * as categoriesService from '../services/categories.service';
+import * as categoriesService from '../services/categories.service.js';
 import { NextFunction, Request, Response } from 'express';
 
 export const createCategory = async (
@@ -9,6 +9,11 @@ export const createCategory = async (
   try {
     const userId = req.user?.userId;
     const categoryData = req.body;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
     const category = await categoriesService.createCategory(
       categoryData,
       userId,
@@ -27,6 +32,10 @@ export const updateCategory = async (
   try {
     const userId = req.user?.userId;
     const categoryData = req.body;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
     const category = await categoriesService.updateCategory(
       req.params.id,
       categoryData,
@@ -45,6 +54,11 @@ export const deleteCategory = async (
 ) => {
   try {
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
     await categoriesService.deleteCategory(req.params.id, userId);
     res.status(204).send();
   } catch (error) {
@@ -59,6 +73,11 @@ export const getCategories = async (
 ) => {
   try {
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
     const categories = await categoriesService.getCategoriesByUserId(userId);
     res.status(200).json(categories);
   } catch (error) {
@@ -73,6 +92,11 @@ export const getCategory = async (
 ) => {
   try {
     const userId = req.user?.userId;
+
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
     const category = await categoriesService.getCategoryById(
       req.params.id,
       userId,
